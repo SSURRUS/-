@@ -1,3 +1,5 @@
+第一模块就是将需要的包导进去
+
 import numpy as np
 import pandas as pd
 from collections import Counter
@@ -22,3 +24,35 @@ import datetime
       components.Table:用于创建表格组件
       options.ComponentTitleOpts:配置表格标题的选项
 datatime：处理日期时间的库，也可以用于日期的筛选和格式化
+
+第二模块就是对数据进行读取并且进行一个初步的清洗
+
+data_haed = pd.read_excel(r"E:/data analyze/春节档-电影票房表现概览.xlsx")
+这边根据你文件的路径地址进行粘贴就可以
+data_haed.head(1)
+
+data_haed["首映票房"] = data_haed["首映票房"].apply(lambda x: round(x/100000000, 2))
+data_haed["首周票房"] = data_haed["首周票房"].apply(lambda x: round(x/100000000, 2))
+data_haed["首周末票房"] = data_haed["首周末票房"].apply(lambda x: round(x/100000000, 2))
+
+data_haed = data_haed.rename(columns={"首映票房": "首映票房/亿", "首周票房": "首周票房/亿", "首周末票房": "首周末票房/亿"})
+
+data_haed.info()
+
+data_haed = data_haed.drop(labels=["EntMovieID","DBOMovieID","EFMTMovieID","GenreMainID"],axis=1)
+
+目的：读取“春节档-电影票房表现概览。xlsx”文件，进行单位转换和列清理
+详细说明：
+ 数据读取：
+     pd.read_excel(...):从指定路径读取Excel文件，返回一个DataFrame对象
+     data_head.head(1):查看前一行数据，用于初步检查数据结构
+ 单位转换：
+     对“首映票房”、“首周票房”，“首周末票房”三列进行处理：
+        apply（lambda x:round(x/100000000,2)）：将原始数据（假设为元）除1亿并保留两位小数，转换为亿元单位
+        例如：原始值是123456789，运行后结果为1.23亿
+ 列重命名：
+     rename（columns={...}）:将列名字改为带有“/亿”的新名称，明确单位
+ 数据信息查看：
+     data_head.info():输出DataFrame的基本信息，包括列名、数据类型、非空值数量等，便于检查数据的完整性
+ 删除无关列：
+     drop(labels=[...],axis=1):删除指定的4列（EntMovieID等）
