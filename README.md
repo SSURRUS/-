@@ -81,4 +81,44 @@ table_all.render_notebook()
     print(colums):打印列名，便于确认
   数据准备：
     data.head[colums].apply(lambda x:list(x),axis=1):按行将数据转换为列表形式
-    .values.tolist()
+    .values.tolist()：将结果转为Python原生列表，作为表格的行数据
+  创建表格：
+    Table():初始化一个表格对象
+    attributes：定义HTML属性，class="fl-table"可能用于CSS样式,style="margin:0 auto"使表格居中
+    add(headers,row_all，attributes):添加表头（列名）和行数据
+  设置全局选项：
+    set_global_opts(title_opts=...):设置表格标题和副标题，提示用户可以拖动表格进行查看
+  渲染：
+    render_notebook():在Jupyter Notebook中渲染交互式表格（需在Notebook环境中运行）
+
+第四模块数据的读取与清洗（电影票房三十日时段详情）
+
+data_movie_time = pd.read_excel(r"E:/data analyze/春节档-电影票房三十日时段详情.xls")
+
+data_movie_time["当前票房/万"]=data_movie_time["当前票房/万"].apply(lambda x:round(x/10000000,2))
+data_movie_time["当前场次"]=data_movie_time["当前场次"].apply(lambda x:round(x/10000,2))
+data_movie_time["当前人次/万"]=data_movie_time["当前人次/万"].apply(lambda x:round(x/10000000,2))
+
+data_movie_time=data_movie_time.rename(
+    columns={"当前票房/万"："当前票房/千万"，"当前场次"："当前场次/万"，"当前人次/万"："当前人次/百万"}）
+data_movie_time=data_movie_time[data_movie_time['日期']<='2022-02-07']
+data_movie_time.head(2)
+
+data_movie_time['电影'].value_counts()
+
+目的：读取“春节档-电影票房三十日时段详情.xls”，进行单位转换并筛选数据
+详细说明：
+  数据读取：
+    pd.read_excel(...): 读取 Excel 文件
+  单位转换：
+    "当前票房/万"除以1000万，转换为"千万"单位
+    "当前场次"除以1万，单位不变但是数值调整
+    "当前人次/万"除以100万，转换为"百万"单位
+    使用round(...,2)保留两位小数
+  列表重名:
+    rename(columns={......}):更新列名以反映新单位
+  数据筛选：
+    data_movie_time['日期']<='2022-02-07'：筛选出春节档的数据
+  初步检查：
+    head(2)：查看前2行
+    value_counts():统计各电影的出现次数，了解数据分布
