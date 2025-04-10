@@ -237,3 +237,175 @@ line.set_series_opts(
    set_color:设置三条线的颜色
  渲染：
    在Notebook中显示
+
+
+第六模块是柱状图与折线图叠加
+
+data = pd.read_excel(r"E:/data analyze/春节档-票房详情.xlsx")
+data.head(5)
+
+def tranform_data(x):
+    x=round(x/10000,2)
+    return x
+
+data['票房/（万）']=data['票房'].apply(lambda x:tranform_data(x))
+data_7=data[data["日期"]>="2022-02-01"]
+
+bar=(
+    Bar(init_opts=opts.InitOpts(theme='light',width='980px',height='500px'))
+        .add_xaxis(xaxis_data=data_7['日期'].tolist())
+        .add_yaxis(
+        series_name="场次",
+        y_axis=data_7['场次'].tolist(),
+        label_opts=opts.LabelOpts(is_show=False,position='top',formatter="{c}"),
+        itemstyle_opts=opts.AreaStyleOpts(opacity=0.8,color=JsCode("..."))
+    )
+        .add_yaxis(
+        series_name="人次",
+        y_axis=data_7['人次'].tolist(),
+        label_opts=opts.LabelOpts(is_show=False,position='top',formatter="{c}"),
+        itemstyle_opts=opt.AreaStyleOpts(opacity=0.8,color=JsCode("..."))
+    )
+        .extend_axis(yaxis=opts.AxisOpts(name="",type="value",min_=-4000,max_=200000,is_show=False))
+        .set_global_opts(...)
+)
+
+line=(
+    Line()
+         .add_xaxis(xaxis_data=data_7['日期'].tolist())
+         .add_yaxis(
+         series_name="票房/（万）",
+         yaxis_index=1,
+         is_smooth=True,
+         y_axis=data_7['票房/（万）'].tolist(),
+         itemstyle_opts={"normal":{...}},
+         linestyle_opts={"normal":{...}}
+    )
+)
+
+bar.overlap(line)
+bar.render_notebook()
+
+目的: 显示春节档 7 天（2022-02-01 起）的场次、人次（柱状图）和票房（折线图）。
+详细说明:
+  数据处理:
+    读取“春节档-票房详情.xlsx”，将票房转换为万元单位。筛选 2022-02-01 后的数据。
+  柱状图:
+    X 轴为日期，添加“场次”和“人次”两组柱状图，使用渐变色。添加次坐标轴（隐藏），为折线图准备。
+  折线图:
+    添加“票房/万”折线，使用次坐标轴，设置渐变色和阴影。
+  叠加:
+    bar.overlap(line): 将折线图叠加在柱状图上。
+  渲染:
+    显示组合图表。
+
+
+
+第七模块是堆叠柱状图
+
+data = pd.read_excel(r'E:/data analyze/春节档-电影票房表现概览.xlsx')
+data["累计票房"]=data["累计票房"].apply(lambda x:round(x/10000000,2))
+data["累计场次"]=data["累计场次"].apply(lambda x:round(x/10000,2))
+data["累计人次"]=data["累计人次"].apply(lambda x:round(x/1000000,2))
+data=data.rename(columns={"累计票房":"累计票房/千万","累计场次"："累计场次/万"，"累计人次"："累计人次/百万"})
+data=data[data['正式上映日期']=='2022-02-01']
+
+bar_china=(
+    Bar(init_opts=opts.InitOpts(width="1200px",height="600px,theme='light'))
+        .add_xaxis(xaxis_data=data['电影'].tolist())
+        .add_yaxis(series_name="累计票房/千万",stack='stack1',y_axis=data['累计票房/千万'].tolist(),...)
+        .add_yaxis(series_name="累计票房/百万",stack='stack1',y_axis=data['累计票房/百万'].tolist(),...)
+        .add_yaxis(series_name="累计票房/万",stack='stack1',y_axis=data['累计票房/万'].tolist(),...)
+        .reversal_axis()
+        .set_global_opts(...)
+)
+bar_china.render_notebook()
+
+目的: 
+  显示 2022-02-01 上映电影的累计票房、人次、场次堆叠柱状图。
+详细说明:
+  数据处理:
+    单位转换并筛选上映日期为 2022-02-01 的电影。
+  柱状图:
+    X 轴为电影名，Y 轴为三组堆叠数据，使用渐变色和阴影。
+    reversal_axis(): 翻转坐标轴，横向显示。
+  渲染:
+    显示堆叠柱状图。
+
+
+第八模块地域分布堆叠柱状图与饼图叠加
+
+data_move_diyu = pd.read_excel(r'E:/data analyze/春节档-排片地域分布（场次）-top10影片.xlsx')
+data_move_diyu=data_move_diyu.drop(data_move_diyu[(data_move_diyu['电影']=="Clevel")|(data_move_diyu['电影']=="CityLevel")].index)
+data_move_diyu['电影']=data_move_diyu['电影'].apply(lambda x:x.split("|")[-1])
+data_move_diyu=data_move_diyu.fillna(0)
+data_move_diyu['场次']=data_move_diyu['场次'].astype(int)
+
+one_city=data_move_diyu[(data_move_diyu['城市']=='一线城市'）]
+
+move_top_10=one_city_movie.merge(two_city_movie, how='left', on='电影').fillna(0)
+
+paipian_top=pd.read_excel(r'E:/data analyze/春节档-排片统计（场次）-top10影片.xlsx')
+
+bar_diyu=(
+    Bar(...)
+        .add_xaxis(...)
+        .add_yaxis(series_name="一线城市",stack='stack1',...)
+        .reversal_axis()
+        .set_global_opts(...)
+)
+pie=(Pie(...).add(...))
+bar_diyu.overlap(pie)
+bar_diyu.render_notebook()
+
+目的: 
+  显示 Top 10 电影在不同城市级别的排片分布（柱状图）与总排片占比（饼图）。
+详细说明:
+  数据处理:
+    清洗数据，去除无关行，提取电影名，合并各城市级别数据。
+  柱状图:
+    堆叠显示各城市级别场次。
+  饼图:
+    显示总排片占比。
+  叠加:
+    将饼图叠加在柱状图右侧。
+
+
+第九个模块时间动态图
+
+t2=TimeLine(...)
+for d in range(1,7):
+    bar_diyu_pie=(Bar(...).add_yaxis(...))
+    pie=(Pie(...).add(...))
+    bar_diyu_pie.overlap(pie)
+    t2.add(bar_diyu_pie,'{}'。format(d))
+t2.render_notebook()
+
+目的: 
+  创建 2022-02-01 至 02-06 的动态地域分布图。
+详细说明:
+  时间线:
+    Timeline: 创建时间线组件，自动播放。
+  每日图表:
+    循环生成每日柱状图和饼图组合。
+  渲染:
+    显示动态图表。
+
+
+第十模块大屏展示
+
+from pyecharts.charts import Page
+#前面声明忘记加了 写在这边了 写在代码的开头会稍微好点
+page=Page(layout=Page.DraggablePageLayout,page_title"大屏展示")
+page.add(line,bar,bar_china,bar_diyu,t2)
+page.render('movie analyze.html')
+
+目的:
+  将所有图表整合到一个可拖拽布局的 HTML 页面。
+详细说明:
+  Page: 创建页面，支持拖拽布局。
+  add(...): 添加所有图表。
+  render(...): 输出 HTML 文件，用户可调整布局并保存配置。
+
+
+总结：通过读取多个 Excel 文件，分析春节档电影数据，生成折线图、柱状图、饼图等可视化内容，最终整合为一个大屏展示页面。每个模块专注于特定数据处理或图表类型，逻辑清晰，适合数据分析和可视化展示需求。运行时需确保文件路径正确且环境支持 Notebook 或 HTML 输出。本段自述中的代码为自敲，因为这里尚且没有运行环境故无法测试，其中语法可能会有一些因为单词拼写的错误望能理解。代码源文件也已经上传可直接运行，本段自述仅用于加强自身对知识的理解也方便观看者。
