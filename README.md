@@ -57,6 +57,9 @@ data_haed = data_haed.drop(labels=["EntMovieID","DBOMovieID","EFMTMovieID","Genr
  删除无关列：
      drop(labels=[...],axis=1):删除指定的4列（EntMovieID等）
 
+运行截图：
+这段是在程序当中直接生成的效果图，需要在开发软件的运行框里面查看
+![d060044b72be28b87cfa532e157103c](https://github.com/user-attachments/assets/6427952f-4f00-4786-88fa-2085abf8ece6)
 
 第三模块就是创建电影详情表格
 
@@ -237,6 +240,8 @@ line.set_series_opts(
    set_color:设置三条线的颜色
  渲染：
    在Notebook中显示
+运行截图：
+![53d30a5bf1d2c63fb06ef1d617deb76](https://github.com/user-attachments/assets/6161ee7b-61dc-4b9e-8c6a-b89aa6b050dd)
 
 
 第六模块是柱状图与折线图叠加
@@ -331,6 +336,9 @@ bar_china.render_notebook()
     reversal_axis(): 翻转坐标轴，横向显示。
   渲染:
     显示堆叠柱状图。
+运行截图：
+![31cb437124aeae08ab2522ed01d66de](https://github.com/user-attachments/assets/f04a3fc2-b4b1-4738-9713-2f7869afed37)
+
 
 
 第八模块地域分布堆叠柱状图与饼图叠加
@@ -369,6 +377,8 @@ bar_diyu.render_notebook()
     显示总排片占比。
   叠加:
     将饼图叠加在柱状图右侧。
+运行截图：
+![567449b5b15c920f9c5805bc4f6edc9](https://github.com/user-attachments/assets/41ded739-c6c8-4bc8-9f2d-8cc26a852c80)
 
 
 第九个模块时间动态图
@@ -390,6 +400,10 @@ t2.render_notebook()
     循环生成每日柱状图和饼图组合。
   渲染:
     显示动态图表。
+运行截图：
+  因图片无法展示动态效果，还请自己跑一下代码看看时间线变换
+![b3c8cea4048a96d4d8f4fb89bc3a858](https://github.com/user-attachments/assets/c5801ae7-409f-40c2-94c9-538bceb614e2)
+
 
 
 第十模块大屏展示
