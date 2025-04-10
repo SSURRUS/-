@@ -56,3 +56,29 @@ data_haed = data_haed.drop(labels=["EntMovieID","DBOMovieID","EFMTMovieID","Genr
      data_head.info():输出DataFrame的基本信息，包括列名、数据类型、非空值数量等，便于检查数据的完整性
  删除无关列：
      drop(labels=[...],axis=1):删除指定的4列（EntMovieID等）
+
+
+第三模块就是创建电影详情表格
+
+colums=list(data_head)
+print(colums)
+
+headers=colums
+row_all=data_head[colums].apply(lambda x: list(x),axis=).value.tolist()
+
+table_all=Table()
+attributes={"class":"fl-table","style":"margin: auto"}
+table_all.add(headers,row_all,attributes)
+table_all.set_global_opts(
+    title_opts=ComponentTitleOpts(title=f"春节档-电影详情数据概览",subtitle="(上下左右移动表格)")
+    )
+table_all.render_notebook()
+
+目的：将清洗后的数据生成一个交互式的表格并显示
+详细说明：
+  获取列名：
+    colums=list(data_head):将DataFrame的列名转换为列表
+    print(colums):打印列名，便于确认
+  数据准备：
+    data.head[colums].apply(lambda x:list(x),axis=1):按行将数据转换为列表形式
+    .values.tolist()
