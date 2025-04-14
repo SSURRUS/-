@@ -1,4 +1,4 @@
-### 第一模块就是将需要的包导进去<br>
+## 第一模块就是将需要的包导进去<br>
 
 import numpy as np <br>
 import pandas as pd <br>
@@ -11,8 +11,8 @@ from pyecharts.components import Table <br>
 from pyecharts.options import ComponentTitleOpts <br>
 import datetime <br>
 
-## 目的：导入数据处理，可视化和工具所需要的Python库 <br>
-## 详细说明：<br>
+### 目的：导入数据处理，可视化和工具所需要的Python库 <br>
+### 详细说明：<br>
     numpy(np)：用于数值计算的库，提供数组操作功能，在数据处理中常用于数学运算 <br>
     pandas（pd）：数据分析的核心库，用于读取、清洗和处理结构化的数据（如表格）<br>
     collections.Counter：一个计数工具，用于统计可迭代对象的元素出现次数 <br>
@@ -25,7 +25,7 @@ import datetime <br>
     options.ComponentTitleOpts:配置表格标题的选项 <br>
     datatime：处理日期时间的库，也可以用于日期的筛选和格式化 <br>
 
-### 第二模块就是对数据进行读取并且进行一个初步的清洗 <br>
+## 第二模块就是对数据进行读取并且进行一个初步的清洗 <br>
 
 data_haed = pd.read_excel(r"E:/data analyze/春节档-电影票房表现概览.xlsx") <br>
 这边根据你文件的路径地址进行粘贴就可以 <br>
@@ -41,8 +41,8 @@ data_haed.info() <br>
 
 data_haed = data_haed.drop(labels=["EntMovieID","DBOMovieID","EFMTMovieID","GenreMainID"],axis=1) <br>
 
-## 目的：读取“春节档-电影票房表现概览。xlsx”文件，进行单位转换和列清理 <br>
-## 详细说明： <br>
+### 目的：读取“春节档-电影票房表现概览。xlsx”文件，进行单位转换和列清理 <br>
+### 详细说明： <br>
  # 数据读取： <br>
      pd.read_excel(...):从指定路径读取Excel文件，返回一个DataFrame对象 <br>
      data_head.head(1):查看前一行数据，用于初步检查数据结构 <br>
@@ -61,7 +61,7 @@ data_haed = data_haed.drop(labels=["EntMovieID","DBOMovieID","EFMTMovieID","Genr
 # 这段是在程序当中直接生成的效果图，需要在开发软件的运行框里面查看 <br>
 ![d060044b72be28b87cfa532e157103c](https://github.com/user-attachments/assets/6427952f-4f00-4786-88fa-2085abf8ece6)
 
-### 第三模块就是创建电影详情表格 <br>
+## 第三模块就是创建电影详情表格 <br>
 
 colums=list(data_head) <br>
 print(colums) <br>
@@ -77,8 +77,8 @@ table_all.set_global_opts( <br>
     ) <br>
 table_all.render_notebook() <br>
 
-## 目的：将清洗后的数据生成一个交互式的表格并显示 <br>
-# 详细说明： <br>
+### 目的：将清洗后的数据生成一个交互式的表格并显示 <br>
+### 详细说明： <br>
   # 获取列名： <br>
     colums=list(data_head):将DataFrame的列名转换为列表 <br>
     print(colums):打印列名，便于确认 <br>
@@ -94,7 +94,7 @@ table_all.render_notebook() <br>
   # 渲染： <br>
     render_notebook():在Jupyter Notebook中渲染交互式表格（需在Notebook环境中运行） <br>
 
-### 第四模块数据的读取与清洗（电影票房三十日时段详情） <br>
+## 第四模块数据的读取与清洗（电影票房三十日时段详情） <br>
 
 data_movie_time = pd.read_excel(r"E:/data analyze/春节档-电影票房三十日时段详情.xls") <br>
 
@@ -109,8 +109,8 @@ data_movie_time.head(2) <br>
 
 data_movie_time['电影'].value_counts() <br>
 
-## 目的：读取“春节档-电影票房三十日时段详情.xls”，进行单位转换并筛选数据 <br>
-## 详细说明： <br>
+### 目的：读取“春节档-电影票房三十日时段详情.xls”，进行单位转换并筛选数据 <br>
+### 详细说明： <br>
   # 数据读取： <br>
     pd.read_excel(...): 读取 Excel 文件 <br>
   # 单位转换： <br>
@@ -127,7 +127,7 @@ data_movie_time['电影'].value_counts() <br>
     value_counts():统计各电影的出现次数，了解数据分布 <br>
 
 
-### 第五模块创建折线图（长津湖之水门桥票房表现） <br>
+## 第五模块创建折线图（长津湖之水门桥票房表现） <br>
 
 movie_chang=data_movie_time[data_movie_time["电影"]=="长津湖之水门桥"] <br>
 
@@ -215,7 +215,7 @@ line.set_series_opts( <br>
     line.set_color(colors=['#80FFA5','00DDFF','#FF0087']) <br>
     line.render_notebook() <br>
     
-## 目的: 为电影“长津湖之水门桥”绘制票房、场次、人次的折线图 <br>
+### 目的: 为电影“长津湖之水门桥”绘制票房、场次、人次的折线图 <br>
 
 ## 详细说明: <br>
   # 数据筛选： <br>
@@ -245,7 +245,7 @@ line.set_series_opts( <br>
 ![53d30a5bf1d2c63fb06ef1d617deb76](https://github.com/user-attachments/assets/6161ee7b-61dc-4b9e-8c6a-b89aa6b050dd)
 
 
-### 第六模块是柱状图与折线图叠加 <br>
+## 第六模块是柱状图与折线图叠加 <br>
 
 data = pd.read_excel(r"E:/data analyze/春节档-票房详情.xlsx") <br>
 data.head(5) <br>
@@ -292,8 +292,8 @@ line=( <br>
 bar.overlap(line) <br>
 bar.render_notebook() <br>
 
-## 目的: 显示春节档 7 天（2022-02-01 起）的场次、人次（柱状图）和票房（折线图）。 <br>
-## 详细说明: <br>
+### 目的: 显示春节档 7 天（2022-02-01 起）的场次、人次（柱状图）和票房（折线图）。 <br>
+### 详细说明: <br>
   # 数据处理: <br>
     读取“春节档-票房详情.xlsx”，将票房转换为万元单位。筛选 2022-02-01 后的数据。<br>
   # 柱状图: <br>
@@ -307,7 +307,7 @@ bar.render_notebook() <br>
 
 
 
-### 第七模块是堆叠柱状图 <br>
+## 第七模块是堆叠柱状图 <br>
 
 data = pd.read_excel(r'E:/data analyze/春节档-电影票房表现概览.xlsx') <br>
 data["累计票房"]=data["累计票房"].apply(lambda x:round(x/10000000,2)) <br>
@@ -327,9 +327,9 @@ bar_china=( <br>
 )<br>
 bar_china.render_notebook() <br>
 
-## 目的:  <br>
+### 目的:  <br>
   显示 2022-02-01 上映电影的累计票房、人次、场次堆叠柱状图。 <br>
-## 详细说明: <br>
+### 详细说明: <br>
   # 数据处理: <br>
     单位转换并筛选上映日期为 2022-02-01 的电影。 <br>
   # 柱状图: <br>
@@ -342,7 +342,7 @@ bar_china.render_notebook() <br>
 
 
 
-### 第八模块地域分布堆叠柱状图与饼图叠加 <br>
+## 第八模块地域分布堆叠柱状图与饼图叠加 <br>
 
 data_move_diyu = pd.read_excel(r'E:/data analyze/春节档-排片地域分布（场次）-top10影片.xlsx') <br>
 data_move_diyu=data_move_diyu.drop(data_move_diyu[(data_move_diyu['电影']=="Clevel")|(data_move_diyu['电影']=="CityLevel")].index) <br>
@@ -367,8 +367,8 @@ pie=(Pie(...).add(...)) <br>
 bar_diyu.overlap(pie) <br>
 bar_diyu.render_notebook() <br>
  
-## 目的:  显示 Top 10 电影在不同城市级别的排片分布（柱状图）与总排片占比（饼图）。 <br>
-## 详细说明: <br>
+### 目的:  显示 Top 10 电影在不同城市级别的排片分布（柱状图）与总排片占比（饼图）。 <br>
+### 详细说明: <br>
   # 数据处理: <br>
     清洗数据，去除无关行，提取电影名，合并各城市级别数据。 <br>
   # 柱状图: <br>
@@ -381,7 +381,7 @@ bar_diyu.render_notebook() <br>
 ![567449b5b15c920f9c5805bc4f6edc9](https://github.com/user-attachments/assets/41ded739-c6c8-4bc8-9f2d-8cc26a852c80)
 
 
-### 第九个模块时间动态图 <br>
+## 第九个模块时间动态图 <br>
 
 t2=TimeLine(...) <br>
 for d in range(1,7): <br>
@@ -391,9 +391,9 @@ for d in range(1,7): <br>
     t2.add(bar_diyu_pie,'{}'.format(d)) <br>
 t2.render_notebook() <br>
 
-## 目的: <br>
+### 目的: <br>
   创建 2022-02-01 至 02-06 的动态地域分布图。<br>
-## 详细说明: <br>
+### 详细说明: <br>
   # 时间线: <br>
     Timeline: 创建时间线组件，自动播放。 <br>
   # 每日图表: <br>
@@ -406,7 +406,7 @@ t2.render_notebook() <br>
 
 
 
-### 第十模块大屏展示 <br>
+## 第十模块大屏展示 <br>
 
 from pyecharts.charts import Page <br>
 #前面声明忘记加了 写在这边了 写在代码的开头会稍微好点 <br>
@@ -414,8 +414,8 @@ page=Page(layout=Page.DraggablePageLayout,page_title"大屏展示") <br>
 page.add(line,bar,bar_china,bar_diyu,t2) <br>
 page.render('movie analyze.html') <br>
 
-## 目的: 将所有图表整合到一个可拖拽布局的 HTML 页面。 <br>
-## 详细说明: <br>
+### 目的: 将所有图表整合到一个可拖拽布局的 HTML 页面。 <br>
+### 详细说明: <br>
   Page: 创建页面，支持拖拽布局。 <br>
   add(...): 添加所有图表。 <br>
   render(...): 输出 HTML 文件，用户可调整布局并保存配置。 <br>
