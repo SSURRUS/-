@@ -1,6 +1,6 @@
-第一模块就是将需要的包导进去
+##第一模块就是将需要的包导进去<br>
 
-import numpy as np
+import numpy as np <br>
 import pandas as pd
 from collections import Counter
 from pyecharts import options as opts
