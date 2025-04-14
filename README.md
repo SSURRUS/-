@@ -1,4 +1,4 @@
-## 第一模块就是将需要的包导进去<br>
+# 第一模块就是将需要的包导进去<br>
 
 import numpy as np <br>
 import pandas as pd <br>
@@ -11,8 +11,8 @@ from pyecharts.components import Table <br>
 from pyecharts.options import ComponentTitleOpts <br>
 import datetime <br>
 
-### 目的：导入数据处理，可视化和工具所需要的Python库 <br>
-### 详细说明：<br>
+## 目的：导入数据处理，可视化和工具所需要的Python库 <br>
+## 详细说明：<br>
     numpy(np)：用于数值计算的库，提供数组操作功能，在数据处理中常用于数学运算 <br>
     pandas（pd）：数据分析的核心库，用于读取、清洗和处理结构化的数据（如表格）<br>
     collections.Counter：一个计数工具，用于统计可迭代对象的元素出现次数 <br>
